@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Search, Filter, Zap, Award, TrendingUp, ChevronDown } from "lucide-react";
-import { loadProducts, Product, CATEGORIES } from "@/store/products";
+import { Product, CATEGORIES } from "@/store/products";
+import { subscribeProducts } from "@/lib/db";
 import ProductCard from "@/components/ProductCard";
 
 interface StorePageProps {
@@ -14,14 +15,8 @@ export default function StorePage({ onCartOpen }: StorePageProps) {
   const [sortBy, setSortBy] = useState<"default" | "price-asc" | "price-desc">("default");
 
   useEffect(() => {
-    const load = () => setProducts(loadProducts());
-    load();
-    window.addEventListener("storage", load);
-    window.addEventListener("gnr-products-updated", load);
-    return () => {
-      window.removeEventListener("storage", load);
-      window.removeEventListener("gnr-products-updated", load);
-    };
+    const unsub = subscribeProducts(setProducts);
+    return unsub;
   }, []);
 
   const filtered = useMemo(() => {

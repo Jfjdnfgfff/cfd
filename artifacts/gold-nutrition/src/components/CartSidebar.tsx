@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { X, Trash2, ShoppingBag, MessageCircle, Phone, ChevronDown } from "lucide-react";
 import { cart, CartItem } from "@/store/cart";
 import { WILAYAS } from "@/store/products";
+import { dbSaveOrder } from "@/lib/db";
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -46,11 +47,30 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
     return Object.keys(errs).length === 0;
   };
 
-  const handleWhatsApp = () => {
+  const handleWhatsApp = async () => {
     if (!validate()) return;
     if (items.length === 0) {
       alert("السلة فارغة!");
       return;
+    }
+
+    /* حفظ الطلب في قاعدة البيانات */
+    try {
+      await dbSaveOrder({
+        firstName: form.firstName,
+        lastName: form.lastName,
+        wilaya: form.wilaya,
+        baladiya: form.baladiya,
+        phone: form.phone,
+        items: items.map((i) => ({
+          name: i.product.name,
+          qty: i.quantity,
+          price: i.product.price,
+        })),
+        total,
+      });
+    } catch {
+      /* لا نوقف الطلب إذا فشل الحفظ */
     }
 
     const itemsText = items
@@ -71,6 +91,9 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
       `شكراً! أرجو تأكيد طلبي.`
     );
 
+    cart.clear();
+    setForm({ ...EMPTY_FORM });
+    setShowForm(false);
     window.open(`https://wa.me/213549195666?text=${message}`, "_blank");
   };
 
