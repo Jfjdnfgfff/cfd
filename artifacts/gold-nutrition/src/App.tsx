@@ -3,6 +3,7 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import Navbar from "@/components/Navbar";
 import CartSidebar from "@/components/CartSidebar";
 import Footer from "@/components/Footer";
+import AdminFAB from "@/components/AdminFAB";
 import StorePage from "@/pages/StorePage";
 import AdminPage from "@/pages/AdminPage";
 
@@ -41,6 +42,7 @@ function App() {
             />
             <StorePage onCartOpen={() => setCartOpen(true)} />
             <Footer />
+            <AdminFAB />
           </>
         </Route>
 
