@@ -1,0 +1,259 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-gold: hsl(var(--gold));
+  --color-gold-light: hsl(var(--gold-light));
+  --color-gold-dark: hsl(var(--gold-dark));
+
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Oswald', sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  --background: 0 0% 5%;
+  --foreground: 0 0% 95%;
+  --border: 43 60% 25%;
+  --input: 0 0% 12%;
+  --ring: 43 89% 50%;
+  --card: 0 0% 9%;
+  --card-foreground: 0 0% 95%;
+  --primary: 43 89% 50%;
+  --primary-foreground: 0 0% 5%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 90%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 55%;
+  --accent: 43 89% 50%;
+  --accent-foreground: 0 0% 5%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --gold: 43 89% 50%;
+  --gold-light: 43 89% 65%;
+  --gold-dark: 43 89% 35%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border box-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-color: #0d0d0d;
+  }
+}
+
+/* Gold gradient text utility */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #f5c518 0%, #ffd700 50%, #c8960c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gold shimmer button */
+.btn-gold {
+  background: linear-gradient(135deg, #c8960c 0%, #ffd700 50%, #c8960c 100%);
+  background-size: 200% 200%;
+  transition: background-position 0.4s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  color: #0d0d0d;
+  font-weight: 700;
+}
+.btn-gold:hover {
+  background-position: 100% 100%;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.35);
+}
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+/* Product card hover */
+.product-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: linear-gradient(160deg, #161616 0%, #111 100%);
+  border: 1px solid rgba(200, 150, 12, 0.2);
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.45);
+}
+
+/* Cart sidebar */
+.cart-sidebar {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cart-sidebar.open {
+  transform: translateX(0);
+}
+.cart-sidebar.closed {
+  transform: translateX(100%);
+}
+
+/* Cart overlay */
+.cart-overlay {
+  transition: opacity 0.35s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #c8960c;
+  border-radius: 3px;
+}
+
+/* Navbar gold underline */
+.nav-gold::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, #ffd700, transparent);
+  margin-top: 2px;
+}
+
+/* Section divider */
+.gold-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffd700 30%, #c8960c 70%, transparent);
+}
+
+/* Category badge */
+.category-badge {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  color: #ffd700;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Hero background */
+.hero-bg {
+  background: radial-gradient(ellipse at top right, rgba(200, 150, 12, 0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at bottom left, rgba(200, 150, 12, 0.08) 0%, transparent 60%),
+              #0d0d0d;
+}
+
+/* Notification badge */
+.cart-badge {
+  background: linear-gradient(135deg, #ffd700, #c8960c);
+  color: #0d0d0d;
+  font-size: 0.65rem;
+  font-weight: 800;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Input style */
+.gold-input {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(200, 150, 12, 0.3);
+  color: #f0f0f0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.gold-input:focus {
+  outline: none;
+  border-color: #ffd700;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.12);
+}
+.gold-input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+/* WhatsApp button */
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  font-weight: 700;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-whatsapp:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+}
+
+/* Admin card */
+.admin-card {
+  background: #111;
+  border: 1px solid rgba(200, 150, 12, 0.25);
+}
+
+/* Quantity control */
+.qty-btn {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: rgba(255, 215, 0, 0.1);
+  color: #ffd700;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background 0.2s;
+  user-select: none;
+}
+.qty-btn:hover {
+  background: rgba(255, 215, 0, 0.2);
+}
+
+/* Animate in */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeSlideUp 0.5s ease forwards;
+}
+
+/* Stagger for product grid */
+.product-card:nth-child(1) { animation-delay: 0.05s; }
+.product-card:nth-child(2) { animation-delay: 0.1s; }
+.product-card:nth-child(3) { animation-delay: 0.15s; }
+.product-card:nth-child(4) { animation-delay: 0.2s; }
+.product-card:nth-child(5) { animation-delay: 0.25s; }
+.product-card:nth-child(6) { animation-delay: 0.3s; }
+.product-card:nth-child(7) { animation-delay: 0.35s; }
+.product-card:nth-child(8) { animation-delay: 0.4s; }
+
+/* Responsive mobile: full-width cart */
+@media (max-width: 640px) {
+  .cart-sidebar {
+    width: 100vw !important;
+  }
+}
