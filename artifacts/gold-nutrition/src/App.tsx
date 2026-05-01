@@ -8,12 +8,12 @@ import AdminPage from "@/pages/AdminPage";
 
 function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0d0d0d]">
+    <div className="min-h-screen flex items-center justify-center bg-[#0d0d0d]" dir="rtl">
       <div className="text-center">
         <h1 className="text-6xl font-black text-yellow-400 mb-4">404</h1>
-        <p className="text-gray-400 text-lg">Page not found</p>
+        <p className="text-gray-400 text-lg">الصفحة غير موجودة</p>
         <a href="/" className="mt-6 inline-block btn-gold px-6 py-2 rounded-xl text-sm">
-          Go Home
+          العودة للرئيسية
         </a>
       </div>
     </div>

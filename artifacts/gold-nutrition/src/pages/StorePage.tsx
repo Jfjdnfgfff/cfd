@@ -10,10 +10,9 @@ interface StorePageProps {
 export default function StorePage({ onCartOpen }: StorePageProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("الكل");
   const [sortBy, setSortBy] = useState<"default" | "price-asc" | "price-desc">("default");
 
-  /* Reload products on mount and when storage changes (admin updates) */
   useEffect(() => {
     const load = () => setProducts(loadProducts());
     load();
@@ -27,24 +26,19 @@ export default function StorePage({ onCartOpen }: StorePageProps) {
 
   const filtered = useMemo(() => {
     let list = [...products];
-
-    if (activeCategory !== "All") {
+    if (activeCategory !== "الكل") {
       list = list.filter((p) => p.category === activeCategory);
     }
-
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
-          p.category.toLowerCase().includes(q) ||
-          (p.nameAr && p.nameAr.includes(q))
+          p.category.toLowerCase().includes(q)
       );
     }
-
     if (sortBy === "price-asc") list.sort((a, b) => a.price - b.price);
     if (sortBy === "price-desc") list.sort((a, b) => b.price - a.price);
-
     return list;
   }, [products, search, activeCategory, sortBy]);
 
@@ -54,34 +48,33 @@ export default function StorePage({ onCartOpen }: StorePageProps) {
   }, [products]);
 
   return (
-    <main className="min-h-screen bg-[#0d0d0d]">
-      {/* Hero section */}
+    <main className="min-h-screen bg-[#0d0d0d]" dir="rtl">
+      {/* قسم الهيرو */}
       <section className="hero-bg pt-28 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          {/* Badge */}
+          {/* شارة */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/25 text-yellow-400 text-xs font-semibold tracking-widest uppercase mb-5">
             <Zap className="w-3.5 h-3.5" />
-            Rouiba's #1 Supplement Store
+            المتجر الأول للمكملات في رويبة
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-4">
-            ELEVATE YOUR{" "}
-            <span className="text-gold-gradient">PERFORMANCE</span>
+            ارتقِ بمستواك{" "}
+            <span className="text-gold-gradient">الرياضي</span>
           </h1>
 
           <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto mb-8">
-            Premium supplements for serious athletes. Quality you can trust,
-            results you will feel.
+            مكملات غذائية ممتازة للرياضيين الجادين. جودة تثق بها، نتائج ستشعر بها.
           </p>
 
-          {/* Stats */}
+          {/* إحصائيات */}
           <div className="flex items-center justify-center gap-6 sm:gap-10 text-center mb-10">
             <div>
               <span className="text-yellow-400 text-2xl font-black block">
                 {stats.total}+
               </span>
               <span className="text-gray-500 text-xs uppercase tracking-wider">
-                Products
+                منتج
               </span>
             </div>
             <div className="w-px h-8 bg-yellow-900/50" />
@@ -90,7 +83,7 @@ export default function StorePage({ onCartOpen }: StorePageProps) {
                 {stats.inStock}
               </span>
               <span className="text-gray-500 text-xs uppercase tracking-wider">
-                In Stock
+                متاح
               </span>
             </div>
             <div className="w-px h-8 bg-yellow-900/50" />
@@ -99,34 +92,47 @@ export default function StorePage({ onCartOpen }: StorePageProps) {
                 100%
               </span>
               <span className="text-gray-500 text-xs uppercase tracking-wider">
-                Authentic
+                أصلي
               </span>
             </div>
           </div>
 
-          {/* Search */}
+          {/* بحث */}
           <div className="relative max-w-xl mx-auto">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+            <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
             <input
               type="search"
-              placeholder="Search supplements..."
+              placeholder="ابحث عن المنتجات..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="gold-input w-full pl-11 pr-4 py-3.5 rounded-xl text-sm"
+              className="gold-input w-full pr-11 pl-4 py-3.5 rounded-xl text-sm"
             />
           </div>
         </div>
       </section>
 
-      {/* Gold divider */}
-      <div className="gold-divider mx-0" />
+      <div className="gold-divider" />
 
-      {/* Filter + Products */}
+      {/* الفلاتر والمنتجات */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Filters row */}
+        {/* صف الفلاتر */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-          {/* Category chips */}
-          <div className="flex flex-wrap gap-2">
+          {/* ترتيب */}
+          <div className="relative flex-shrink-0">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+              className="gold-input appearance-none pr-3 pl-8 py-2 rounded-lg text-xs cursor-pointer"
+            >
+              <option value="default">الترتيب الافتراضي</option>
+              <option value="price-asc">السعر: من الأقل</option>
+              <option value="price-desc">السعر: من الأعلى</option>
+            </select>
+            <ChevronDown className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none" />
+          </div>
+
+          {/* أزرار الفئات */}
+          <div className="flex flex-wrap gap-2 justify-end">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
@@ -141,48 +147,32 @@ export default function StorePage({ onCartOpen }: StorePageProps) {
               </button>
             ))}
           </div>
-
-          {/* Sort */}
-          <div className="relative flex-shrink-0">
-            <select
-              value={sortBy}
-              onChange={(e) =>
-                setSortBy(e.target.value as typeof sortBy)
-              }
-              className="gold-input appearance-none pl-3 pr-8 py-2 rounded-lg text-xs cursor-pointer"
-            >
-              <option value="default">Default order</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-            </select>
-            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none" />
-          </div>
         </div>
 
-        {/* Results info */}
+        {/* معلومات النتائج */}
         <div className="flex items-center gap-2 mb-6">
-          <Filter className="w-3.5 h-3.5 text-yellow-600" />
           <span className="text-gray-500 text-xs">
-            {filtered.length} product{filtered.length !== 1 ? "s" : ""} found
+            {filtered.length} منتج
           </span>
+          <Filter className="w-3.5 h-3.5 text-yellow-600" />
         </div>
 
-        {/* Product grid */}
+        {/* شبكة المنتجات */}
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <TrendingUp className="w-12 h-12 text-yellow-900/50 mb-3" />
-            <p className="text-gray-400 font-semibold">No products found</p>
+            <p className="text-gray-400 font-semibold">لم يتم العثور على منتجات</p>
             <p className="text-gray-600 text-sm mt-1">
-              Try a different search or category
+              جرب بحثاً مختلفاً أو فئة أخرى
             </p>
             <button
               onClick={() => {
                 setSearch("");
-                setActiveCategory("All");
+                setActiveCategory("الكل");
               }}
               className="mt-4 px-4 py-2 rounded-lg bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20 transition-colors text-sm"
             >
-              Clear filters
+              مسح الفلاتر
             </button>
           </div>
         ) : (
@@ -197,23 +187,23 @@ export default function StorePage({ onCartOpen }: StorePageProps) {
           </div>
         )}
 
-        {/* Feature highlights */}
+        {/* ميزات */}
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             {
               icon: Award,
-              title: "100% Authentic",
-              desc: "All products are certified and sourced from trusted brands.",
+              title: "100% أصلي",
+              desc: "جميع المنتجات معتمدة ومصادرها موثوقة.",
             },
             {
               icon: Zap,
-              title: "Fast Delivery",
-              desc: "Same-day dispatch for orders placed before 4PM.",
+              title: "توصيل سريع",
+              desc: "شحن في نفس اليوم للطلبات قبل الساعة 4 مساءً.",
             },
             {
               icon: TrendingUp,
-              title: "Expert Advice",
-              desc: "Not sure what to buy? Call us — we are here to help.",
+              title: "نصيحة خبير",
+              desc: "لست متأكداً مما تختار؟ اتصل بنا — نحن هنا لمساعدتك.",
             },
           ].map(({ icon: Icon, title, desc }) => (
             <div

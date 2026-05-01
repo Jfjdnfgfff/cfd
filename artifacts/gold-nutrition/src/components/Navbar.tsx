@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ShoppingCart, Menu, X, Dumbbell } from "lucide-react";
+import { ShoppingCart, Menu, X, Dumbbell, LayoutDashboard } from "lucide-react";
 import { cart } from "@/store/cart";
 import { Link } from "wouter";
 
@@ -32,66 +32,20 @@ export default function Navbar({ onCartOpen }: NavbarProps) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer group">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-700 flex items-center justify-center shadow-lg shadow-yellow-900/40 group-hover:shadow-yellow-500/30 transition-shadow">
-                <Dumbbell className="w-4 h-4 text-black" strokeWidth={2.5} />
-              </div>
-              <div>
-                <span className="font-bold text-white text-sm leading-none block">
-                  GOLD NUTRITION
-                </span>
-                <span className="text-yellow-500 text-xs font-semibold tracking-widest">
-                  ROUIBA
-                </span>
-              </div>
-            </div>
-          </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/">
-              <span className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium cursor-pointer">
-                Products
-              </span>
-            </Link>
-            <a
-              href="https://www.facebook.com/share/1KTFBn2dV7/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium"
-            >
-              Facebook
-            </a>
-            <a
-              href="https://maps.app.goo.gl/xucjzoRFYjSK6dUF6?g_st=aw"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium"
-            >
-              Location
-            </a>
-            <Link href="/admin">
-              <span className="text-gray-400 hover:text-yellow-400 transition-colors text-xs font-medium cursor-pointer border border-yellow-900/40 hover:border-yellow-500/50 px-3 py-1.5 rounded-md">
-                Admin
-              </span>
-            </Link>
-          </nav>
-
-          {/* Cart + Mobile toggle */}
+          {/* زر السلة + القائمة الجوالة */}
           <div className="flex items-center gap-3">
             <button
               onClick={onCartOpen}
               className="relative p-2 rounded-lg hover:bg-yellow-500/10 transition-colors group"
-              aria-label="Open cart"
+              aria-label="فتح السلة"
             >
               <ShoppingCart
                 className="w-5 h-5 text-gray-300 group-hover:text-yellow-400 transition-colors"
                 strokeWidth={1.8}
               />
               {cartCount > 0 && (
-                <span className="cart-badge absolute -top-1 -right-1">
+                <span className="cart-badge absolute -top-1 -left-1">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
@@ -100,7 +54,7 @@ export default function Navbar({ onCartOpen }: NavbarProps) {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden p-2 rounded-lg hover:bg-yellow-500/10 transition-colors"
-              aria-label="Toggle menu"
+              aria-label="فتح القائمة"
             >
               {mobileOpen ? (
                 <X className="w-5 h-5 text-gray-300" />
@@ -109,45 +63,94 @@ export default function Navbar({ onCartOpen }: NavbarProps) {
               )}
             </button>
           </div>
+
+          {/* القائمة للسطح المكتب */}
+          <nav className="hidden md:flex items-center gap-8">
+            <Link href="/admin">
+              <span className="flex items-center gap-1.5 text-yellow-400 hover:text-yellow-300 transition-colors text-sm font-semibold cursor-pointer border border-yellow-500/40 hover:border-yellow-400/70 px-3 py-1.5 rounded-md">
+                <LayoutDashboard className="w-3.5 h-3.5" />
+                لوحة التحكم
+              </span>
+            </Link>
+            <a
+              href="https://maps.app.goo.gl/xucjzoRFYjSK6dUF6?g_st=aw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium"
+            >
+              موقعنا
+            </a>
+            <a
+              href="https://www.facebook.com/share/1KTFBn2dV7/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium"
+            >
+              فيسبوك
+            </a>
+            <Link href="/">
+              <span className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium cursor-pointer">
+                المنتجات
+              </span>
+            </Link>
+          </nav>
+
+          {/* الشعار */}
+          <Link href="/">
+            <div className="flex items-center gap-2 cursor-pointer group">
+              <div>
+                <span className="font-bold text-white text-sm leading-none block text-right">
+                  غولد نيوتريشن
+                </span>
+                <span className="text-yellow-500 text-xs font-semibold tracking-widest text-right block">
+                  رويبة
+                </span>
+              </div>
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-700 flex items-center justify-center shadow-lg shadow-yellow-900/40 group-hover:shadow-yellow-500/30 transition-shadow">
+                <Dumbbell className="w-4 h-4 text-black" strokeWidth={2.5} />
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* القائمة الجوالة */}
       {mobileOpen && (
         <div className="md:hidden border-t border-yellow-900/30 bg-black/98 backdrop-blur-md">
           <div className="px-4 py-4 space-y-3">
             <Link href="/">
               <span
-                className="block text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium py-2 cursor-pointer"
+                className="block text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium py-2 cursor-pointer text-right"
                 onClick={() => setMobileOpen(false)}
               >
-                Products
+                المنتجات
               </span>
             </Link>
             <a
               href="https://www.facebook.com/share/1KTFBn2dV7/"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium py-2"
+              className="block text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium py-2 text-right"
               onClick={() => setMobileOpen(false)}
             >
-              Facebook
+              فيسبوك
             </a>
             <a
               href="https://maps.app.goo.gl/xucjzoRFYjSK6dUF6?g_st=aw"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium py-2"
+              className="block text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium py-2 text-right"
               onClick={() => setMobileOpen(false)}
             >
-              Location
+              موقعنا
             </a>
             <Link href="/admin">
               <span
-                className="block text-yellow-500 text-sm font-medium py-2 cursor-pointer"
+                className="flex items-center gap-1.5 justify-end text-yellow-400 text-sm font-semibold py-2 cursor-pointer"
                 onClick={() => setMobileOpen(false)}
               >
-                Admin Dashboard
+                لوحة التحكم
+                <LayoutDashboard className="w-4 h-4" />
               </span>
             </Link>
           </div>

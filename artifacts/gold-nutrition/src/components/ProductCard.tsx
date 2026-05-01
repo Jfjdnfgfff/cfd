@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ShoppingCart, Check, Tag } from "lucide-react";
+import { ShoppingCart, Check } from "lucide-react";
 import { Product } from "@/store/products";
 import { cart } from "@/store/cart";
 
@@ -18,11 +18,11 @@ export default function ProductCard({ product, onCartOpen }: ProductCardProps) {
     setTimeout(() => setAdded(false), 1800);
   };
 
-  const formatPrice = (p: number) => `${p.toLocaleString("fr-DZ")} DA`;
+  const formatPrice = (p: number) => `${p.toLocaleString("fr-DZ")} دج`;
 
   return (
-    <div className="product-card rounded-2xl overflow-hidden animate-fade-up flex flex-col">
-      {/* Image */}
+    <div className="product-card rounded-2xl overflow-hidden animate-fade-up flex flex-col" dir="rtl">
+      {/* الصورة */}
       <div className="relative h-52 sm:h-56 overflow-hidden bg-gray-900">
         <img
           src={product.image}
@@ -33,44 +33,33 @@ export default function ProductCard({ product, onCartOpen }: ProductCardProps) {
               "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=400&q=60";
           }}
         />
-        {/* Category badge */}
-        <span className="category-badge absolute top-3 left-3 px-2.5 py-1 rounded-full font-semibold">
+        {/* شارة الفئة */}
+        <span className="category-badge absolute top-3 right-3 px-2.5 py-1 rounded-full font-semibold">
           {product.category}
         </span>
 
-        {/* Out of stock overlay */}
+        {/* طبقة نفاذ المخزون */}
         {!product.inStock && (
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
             <span className="text-red-400 font-bold text-sm uppercase tracking-wider border border-red-500/50 px-3 py-1 rounded">
-              Out of Stock
+              نفذ المخزون
             </span>
           </div>
         )}
       </div>
 
-      {/* Info */}
+      {/* المعلومات */}
       <div className="p-4 flex flex-col flex-1">
         <div className="flex-1">
           <h3 className="text-white font-bold text-base leading-snug">
             {product.name}
           </h3>
-          {product.nameAr && (
-            <p className="text-gray-500 text-xs mt-0.5" dir="rtl">
-              {product.nameAr}
-            </p>
-          )}
           <p className="text-gray-400 text-xs mt-1.5 leading-relaxed line-clamp-2">
             {product.description}
           </p>
         </div>
 
         <div className="mt-4 flex items-center justify-between gap-3">
-          <div>
-            <span className="text-yellow-400 font-extrabold text-lg">
-              {formatPrice(product.price)}
-            </span>
-          </div>
-
           <button
             onClick={handleAdd}
             disabled={!product.inStock}
@@ -84,16 +73,22 @@ export default function ProductCard({ product, onCartOpen }: ProductCardProps) {
           >
             {added ? (
               <>
+                أُضيف
                 <Check className="w-4 h-4" />
-                Added
               </>
             ) : (
               <>
+                أضف
                 <ShoppingCart className="w-4 h-4" />
-                Add
               </>
             )}
           </button>
+
+          <div>
+            <span className="text-yellow-400 font-extrabold text-lg">
+              {formatPrice(product.price)}
+            </span>
+          </div>
         </div>
       </div>
     </div>

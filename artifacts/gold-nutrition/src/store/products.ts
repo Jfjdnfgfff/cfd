@@ -1,12 +1,10 @@
 /* =========================================================
-   Products store — persists to localStorage
-   Admin can add/delete; store reads the same data
+   قاعدة بيانات المنتجات — تُحفظ في localStorage
    ========================================================= */
 
 export interface Product {
   id: string;
   name: string;
-  nameAr?: string;
   category: string;
   price: number;
   image: string;
@@ -14,88 +12,80 @@ export interface Product {
   inStock: boolean;
 }
 
-const STORAGE_KEY = "gnr_products";
+const STORAGE_KEY = "gnr_products_ar_v2";
 
-/* Default seed products shown on first load */
+/* المنتجات الافتراضية عند أول تشغيل */
 export const DEFAULT_PRODUCTS: Product[] = [
   {
     id: "1",
-    name: "Whey Protein Gold",
-    nameAr: "واي بروتين جولد",
-    category: "Protein",
+    name: "واي بروتين جولد",
+    category: "بروتين",
     price: 4500,
     image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=400&q=80",
-    description: "Premium whey protein concentrate – 2.27 kg",
+    description: "بروتين واي ممتاز – 2.27 كغ",
     inStock: true,
   },
   {
     id: "2",
-    name: "Creatine Monohydrate",
-    nameAr: "كرياتين مونوهيدرات",
-    category: "Creatine",
+    name: "كرياتين مونوهيدرات",
+    category: "كرياتين",
     price: 2200,
     image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80",
-    description: "Pure micronized creatine – 500 g",
+    description: "كرياتين نقي مجهري – 500 غ",
     inStock: true,
   },
   {
     id: "3",
-    name: "Mass Gainer Pro",
-    nameAr: "ماس جينر برو",
-    category: "Mass Gainer",
+    name: "ماس جينر برو",
+    category: "زيادة الوزن",
     price: 5800,
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80",
-    description: "High-calorie mass gainer – 5 kg",
+    description: "مكمل ضخامة سعرات حرارية عالية – 5 كغ",
     inStock: true,
   },
   {
     id: "4",
-    name: "Pre-Workout Blast",
-    nameAr: "بري-ووركاوت بلاست",
-    category: "Pre-Workout",
+    name: "بري-ووركاوت بلاست",
+    category: "ما قبل التمرين",
     price: 3100,
     image: "https://images.unsplash.com/photo-1616279969856-759f316a5ac1?w=400&q=80",
-    description: "Explosive energy pre-workout formula – 300 g",
+    description: "مكمل طاقة انفجارية قبل التمرين – 300 غ",
     inStock: true,
   },
   {
     id: "5",
     name: "BCAA 8:1:1",
-    nameAr: "بي سي أي أي",
-    category: "Amino Acids",
+    category: "أحماض أمينية",
     price: 2800,
     image: "https://images.unsplash.com/photo-1620714223084-8fcacc2523f0?w=400&q=80",
-    description: "Branch-chain amino acids for recovery – 250 g",
+    description: "أحماض أمينية متشعبة للتعافي – 250 غ",
     inStock: true,
   },
   {
     id: "6",
-    name: "Omega-3 Fish Oil",
-    nameAr: "أوميغا 3",
-    category: "Vitamins",
+    name: "أوميغا 3 زيت السمك",
+    category: "فيتامينات",
     price: 1400,
     image: "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=400&q=80",
-    description: "High-potency fish oil softgels – 90 caps",
+    description: "كبسولات زيت السمك عالي الفاعلية – 90 كبسولة",
     inStock: true,
   },
   {
     id: "7",
-    name: "Fat Burner Thermo",
-    nameAr: "حارق الدهون",
-    category: "Fat Burners",
+    name: "حارق الدهون ثيرمو",
+    category: "حرق الدهون",
     price: 3500,
     image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&q=80",
-    description: "Advanced thermogenic fat burner – 60 caps",
+    description: "حارق دهون حراري متقدم – 60 كبسولة",
     inStock: true,
   },
   {
     id: "8",
-    name: "Multivitamin Elite",
-    nameAr: "مولتي فيتامين",
-    category: "Vitamins",
+    name: "مولتي فيتامين إيليت",
+    category: "فيتامينات",
     price: 1800,
     image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80",
-    description: "Complete daily multivitamin complex – 30 packs",
+    description: "مجمع فيتامينات يومي متكامل – 30 كيس",
     inStock: true,
   },
 ];
@@ -135,12 +125,24 @@ export function deleteProduct(id: string): void {
 }
 
 export const CATEGORIES = [
-  "All",
-  "Protein",
-  "Mass Gainer",
-  "Creatine",
-  "Pre-Workout",
-  "Amino Acids",
-  "Fat Burners",
-  "Vitamins",
+  "الكل",
+  "بروتين",
+  "زيادة الوزن",
+  "كرياتين",
+  "ما قبل التمرين",
+  "أحماض أمينية",
+  "حرق الدهون",
+  "فيتامينات",
+];
+
+/* قائمة ولايات الجزائر الـ 58 */
+export const WILAYAS = [
+  "أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار",
+  "البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر",
+  "الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة",
+  "قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض",
+  "إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي",
+  "خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت",
+  "غرداية","غليزان","تيميمون","برج باجي مختار","أولاد جلال","بني عباس",
+  "عين صالح","عين قزام","توقرت","جانت","المغير","المنيعة",
 ];
