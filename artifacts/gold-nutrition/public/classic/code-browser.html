@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>مستعرض الأكواد — Gold Nutrition Rouiba</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background: #0a0a0a; font-family: 'Segoe UI', sans-serif; }
+  pre { white-space: pre-wrap; word-break: break-all; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; }
+  .tab-btn.active { background: #b45309; color: #fff; }
+  .tab-btn { transition: all .2s; }
+  #code-display { min-height: 400px; }
+  .copy-toast { animation: fadeout 2s forwards; }
+  @keyframes fadeout { 0%{opacity:1} 80%{opacity:1} 100%{opacity:0} }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #1a1a1a; }
+  ::-webkit-scrollbar-thumb { background: #b45309; border-radius: 3px; }
+</style>
+</head>
+<body class="min-h-screen text-gray-200">
+
+  <!-- Header -->
+  <div class="bg-gradient-to-l from-yellow-900/40 to-black border-b border-yellow-900/40 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-700 flex items-center justify-center">
+        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+      </div>
+      <div>
+        <p class="text-white font-black text-base leading-none">Gold Nutrition</p>
+        <p class="text-yellow-500 text-xs font-semibold">Rouiba — مستعرض الأكواد</p>
+      </div>
+    </div>
+    <a href="/classic/index.html" class="text-yellow-500 text-sm hover:text-yellow-300 transition">← العودة للمتجر</a>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- Info -->
+    <div class="bg-yellow-900/20 border border-yellow-700/40 rounded-xl p-4 mb-6 flex items-start gap-3">
+      <svg class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <p class="text-yellow-200 text-sm">اضغط على اسم الملف لعرض كوده، ثم اضغط <strong>نسخ الكود</strong> لنسخه كاملاً.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      <button onclick="loadFile('index.html', this)" class="tab-btn active px-4 py-2 rounded-lg bg-yellow-800 text-white text-sm font-semibold border border-yellow-700/50">
+        📄 index.html
+      </button>
+      <button onclick="loadFile('admin.html', this)" class="tab-btn px-4 py-2 rounded-lg bg-gray-800 text-gray-300 text-sm font-semibold border border-gray-700 hover:bg-gray-700">
+        🔐 admin.html
+      </button>
+      <button onclick="loadFile('script.js', this)" class="tab-btn px-4 py-2 rounded-lg bg-gray-800 text-gray-300 text-sm font-semibold border border-gray-700 hover:bg-gray-700">
+        ⚙️ script.js
+      </button>
+    </div>
+
+    <!-- Code Panel -->
+    <div class="bg-gray-900 rounded-2xl border border-gray-700/50 overflow-hidden shadow-2xl">
+      <!-- Panel Header -->
+      <div class="flex items-center justify-between px-5 py-3 bg-gray-800/80 border-b border-gray-700/50">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-red-500/70"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500/70"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500/70"></div>
+          <span id="file-label" class="text-gray-400 text-sm font-mono mr-3">index.html</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="line-count" class="text-gray-500 text-xs"></span>
+          <button onclick="copyCode()" class="flex items-center gap-1.5 bg-yellow-700 hover:bg-yellow-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            نسخ الكود
+          </button>
+          <button onclick="downloadCode()" class="flex items-center gap-1.5 bg-gray-700 hover:bg-gray-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            تحميل
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div id="loading" class="hidden flex items-center justify-center py-20">
+        <div class="w-8 h-8 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+
+      <!-- Error -->
+      <div id="error-msg" class="hidden p-8 text-center text-red-400 text-sm"></div>
+
+      <!-- Code -->
+      <div class="overflow-auto max-h-[65vh]">
+        <pre id="code-display" class="p-5 text-green-300"></pre>
+      </div>
+    </div>
+
+    <!-- Size Info -->
+    <div class="mt-3 flex justify-between items-center text-xs text-gray-600 px-1">
+      <span id="size-info"></span>
+      <span id="copy-toast" class="text-yellow-400 copy-toast opacity-0"></span>
+    </div>
+
+    <!-- All Files Summary -->
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-gray-900 rounded-xl border border-gray-700/40 p-4">
+        <p class="text-yellow-400 font-bold text-sm mb-1">📄 index.html</p>
+        <p class="text-gray-400 text-xs">صفحة المتجر الرئيسية — المنتجات، الفلاتر، نموذج الطلب</p>
+      </div>
+      <div class="bg-gray-900 rounded-xl border border-gray-700/40 p-4">
+        <p class="text-yellow-400 font-bold text-sm mb-1">🔐 admin.html</p>
+        <p class="text-gray-400 text-xs">لوحة التحكم — إدارة المنتجات، الطلبات، كلمة المرور</p>
+      </div>
+      <div class="bg-gray-900 rounded-xl border border-gray-700/40 p-4">
+        <p class="text-yellow-400 font-bold text-sm mb-1">⚙️ script.js</p>
+        <p class="text-gray-400 text-xs">المنطق الكامل — Firebase، السلة، واتساب، المنتجات</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentFile = 'index.html';
+    let currentCode = '';
+
+    async function loadFile(filename, btn) {
+      currentFile = filename;
+      document.getElementById('file-label').textContent = filename;
+      document.getElementById('loading').classList.remove('hidden');
+      document.getElementById('code-display').textContent = '';
+      document.getElementById('error-msg').classList.add('hidden');
+      document.getElementById('size-info').textContent = '';
+      document.getElementById('line-count').textContent = '';
+
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active', 'bg-yellow-800', 'text-white');
+        b.classList.add('bg-gray-800', 'text-gray-300');
+      });
+      btn.classList.add('active', 'bg-yellow-800', 'text-white');
+      btn.classList.remove('bg-gray-800', 'text-gray-300');
+
+      try {
+        const res = await fetch('/classic/' + filename + '?t=' + Date.now());
+        if (!res.ok) throw new Error('تعذّر تحميل الملف');
+        const text = await res.text();
+        currentCode = text;
+        document.getElementById('code-display').textContent = text;
+        const lines = text.split('\n').length;
+        const kb = (new Blob([text]).size / 1024).toFixed(1);
+        document.getElementById('line-count').textContent = lines + ' سطر';
+        document.getElementById('size-info').textContent = 'الحجم: ' + kb + ' KB  •  الأسطر: ' + lines;
+      } catch (e) {
+        document.getElementById('error-msg').textContent = '⚠️ ' + e.message;
+        document.getElementById('error-msg').classList.remove('hidden');
+      } finally {
+        document.getElementById('loading').classList.add('hidden');
+      }
+    }
+
+    function copyCode() {
+      if (!currentCode) return;
+      navigator.clipboard.writeText(currentCode).then(() => {
+        const t = document.getElementById('copy-toast');
+        t.textContent = '✅ تم نسخ الكود!';
+        t.style.opacity = '1';
+        t.style.animation = 'none';
+        setTimeout(() => { t.style.animation = 'fadeout 2s forwards'; }, 50);
+      });
+    }
+
+    function downloadCode() {
+      if (!currentCode) return;
+      const blob = new Blob([currentCode], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = currentFile;
+      a.click();
+    }
+
+    // Auto-load first file
+    loadFile('index.html', document.querySelector('.tab-btn.active'));
+  </script>
+</body>
+</html>
