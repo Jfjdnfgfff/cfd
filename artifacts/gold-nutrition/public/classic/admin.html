@@ -148,6 +148,10 @@
         class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-right text-gray-400 hover:bg-white/5 hover:text-gray-200 transition-all">
         ➕ إضافة منتج
       </button>
+      <button onclick="showTab('password')" id="nav-password"
+        class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-right text-gray-400 hover:bg-white/5 hover:text-gray-200 transition-all">
+        🔐 تغيير كلمة المرور
+      </button>
     </nav>
 
     <!-- تذييل الشريط -->
@@ -249,6 +253,94 @@
               <div class="w-6 h-6 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- ═══ تبويب: تغيير كلمة المرور ═══ -->
+      <div id="tab-password" class="tab-content hidden">
+        <div class="max-w-md mx-auto">
+          <div class="flex items-center gap-3 mb-6 justify-end">
+            <h2 class="text-white font-bold text-base">تغيير كلمة المرور</h2>
+            <span class="text-2xl">🔐</span>
+          </div>
+
+          <div class="admin-card rounded-2xl p-6 space-y-5">
+
+            <!-- مؤشر القوة -->
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+              <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center text-base flex-shrink-0">🛡️</div>
+              <p class="text-gray-400 text-xs leading-relaxed">
+                كلمة المرور الحالية: <span id="pw-current-hint" class="text-yellow-400 font-bold">gold2026</span>
+                — تأكد من حفظ كلمتك الجديدة في مكان آمن.
+              </p>
+            </div>
+
+            <!-- الحقل 1: كلمة المرور الحالية -->
+            <div>
+              <label class="text-gray-400 text-xs mb-1.5 block font-medium">كلمة المرور الحالية *</label>
+              <div class="relative">
+                <button type="button" onclick="togglePwVis('pw-current')"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors text-sm">👁️</button>
+                <input id="pw-current" type="password" placeholder="أدخل كلمة المرور الحالية"
+                  class="gold-input w-full pr-4 pl-10 py-2.5 rounded-lg text-sm"/>
+              </div>
+            </div>
+
+            <!-- الحقل 2: كلمة المرور الجديدة -->
+            <div>
+              <label class="text-gray-400 text-xs mb-1.5 block font-medium">كلمة المرور الجديدة *</label>
+              <div class="relative">
+                <button type="button" onclick="togglePwVis('pw-new')"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors text-sm">👁️</button>
+                <input id="pw-new" type="password" placeholder="6 أحرف على الأقل"
+                  oninput="checkPwStrength(this.value); checkPwMatch()"
+                  class="gold-input w-full pr-4 pl-10 py-2.5 rounded-lg text-sm"/>
+              </div>
+              <!-- شريط قوة كلمة المرور -->
+              <div class="mt-2 space-y-1">
+                <div class="flex gap-1">
+                  <div id="str-1" class="h-1 flex-1 rounded-full bg-gray-800 transition-colors duration-300"></div>
+                  <div id="str-2" class="h-1 flex-1 rounded-full bg-gray-800 transition-colors duration-300"></div>
+                  <div id="str-3" class="h-1 flex-1 rounded-full bg-gray-800 transition-colors duration-300"></div>
+                  <div id="str-4" class="h-1 flex-1 rounded-full bg-gray-800 transition-colors duration-300"></div>
+                </div>
+                <p id="str-label" class="text-xs text-gray-600"></p>
+              </div>
+            </div>
+
+            <!-- الحقل 3: تأكيد كلمة المرور الجديدة -->
+            <div>
+              <label class="text-gray-400 text-xs mb-1.5 block font-medium">تأكيد كلمة المرور الجديدة *</label>
+              <div class="relative">
+                <button type="button" onclick="togglePwVis('pw-confirm')"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors text-sm">👁️</button>
+                <input id="pw-confirm" type="password" placeholder="أعد إدخال كلمة المرور الجديدة"
+                  oninput="checkPwMatch()"
+                  class="gold-input w-full pr-4 pl-10 py-2.5 rounded-lg text-sm"/>
+              </div>
+              <p id="pw-match-msg" class="hidden text-xs mt-1.5"></p>
+            </div>
+
+            <!-- رسالة الخطأ العامة -->
+            <p id="pw-error" class="hidden text-red-400 text-xs text-center py-2 px-3 rounded-lg bg-red-500/10 border border-red-500/20"></p>
+
+            <!-- أزرار -->
+            <div class="flex gap-3 pt-1">
+              <button onclick="resetPwForm()"
+                class="flex-1 py-2.5 rounded-xl text-sm text-gray-400 hover:text-gray-200 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
+                إلغاء
+              </button>
+              <button onclick="doChangePassword()"
+                class="btn-gold flex-1 py-2.5 rounded-xl text-sm flex items-center justify-center gap-2">
+                💾 حفظ كلمة المرور
+              </button>
+            </div>
+          </div>
+
+          <!-- ملاحظة -->
+          <p class="text-gray-700 text-xs text-center mt-4">
+            كلمة المرور تُحفظ في متصفحك محلياً. إذا مسحت بيانات المتصفح ستعود للافتراضية.
+          </p>
         </div>
       </div>
 
@@ -382,14 +474,19 @@
    منطق لوحة التحكم
 ════════════════════════════════════════════ */
 
-const ADMIN_PASSWORD = "gold2026";
+const ADMIN_PASSWORD_DEFAULT = "gold2026";
+/* كلمة المرور الفعلية: تُقرأ من localStorage إن وُجدت وإلا الافتراضية */
+function getActivePassword() {
+  return localStorage.getItem("gnr_admin_pass") || ADMIN_PASSWORD_DEFAULT;
+}
+
 let allProducts = [];
 let currentEditId = null;
 
 /* ── تسجيل الدخول ── */
 function doLogin() {
   const pass = document.getElementById("pass-input").value;
-  if (pass === ADMIN_PASSWORD) {
+  if (pass === getActivePassword()) {
     sessionStorage.setItem("gnr_admin", "1");
     document.getElementById("login-screen").classList.add("hidden");
     document.getElementById("dashboard").classList.remove("hidden");
@@ -657,12 +754,13 @@ function updatePreview() {
 /* ════════════════════════════════════════════
    تبويبات + شريط جانبي
 ════════════════════════════════════════════ */
-const tabTitles = { dashboard:"الرئيسية", products:"المنتجات", add:"إضافة منتج" };
+const tabTitles = { dashboard:"الرئيسية", products:"المنتجات", add:"إضافة منتج", password:"تغيير كلمة المرور" };
 
 function showTab(name) {
   document.querySelectorAll(".tab-content").forEach((el) => el.classList.add("hidden"));
   document.getElementById("tab-" + name).classList.remove("hidden");
   document.getElementById("page-title").textContent = tabTitles[name] || name;
+  if (name === "password") { resetPwForm(); refreshPwHint(); }
 
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     btn.classList.remove("bg-yellow-500/15","text-yellow-400","border","border-yellow-500/25");
@@ -685,6 +783,123 @@ function closeSidebar() {
     document.getElementById("sidebar").style.transform = "translateX(100%)";
     document.getElementById("sidebar-overlay").classList.add("hidden");
   }
+}
+
+/* ════════════════════════════════════════════
+   تغيير كلمة المرور
+════════════════════════════════════════════ */
+
+/**
+ * يُحدّث تلميح كلمة المرور الحالية عند فتح التبويب.
+ */
+function refreshPwHint() {
+  const stored = localStorage.getItem("gnr_admin_pass");
+  const hint = document.getElementById("pw-current-hint");
+  if (hint) hint.textContent = stored ? "••••••••" : ADMIN_PASSWORD_DEFAULT;
+}
+
+/**
+ * تبديل إظهار / إخفاء كلمة المرور.
+ * @param {string} id - معرّف حقل الإدخال
+ */
+function togglePwVis(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+/**
+ * يحسب قوة كلمة المرور ويحدّث الشريط المرئي.
+ * @param {string} val - النص المُدخَل
+ */
+function checkPwStrength(val) {
+  let score = 0;
+  if (val.length >= 6)  score++;
+  if (val.length >= 10) score++;
+  if (/[A-Z]/.test(val) || /[a-z]/.test(val)) score++;
+  if (/[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) score++;
+
+  const colors  = ["bg-red-500","bg-orange-500","bg-yellow-500","bg-green-500"];
+  const labels  = ["ضعيفة","مقبولة","جيدة","قوية جداً"];
+  const txtCols = ["text-red-400","text-orange-400","text-yellow-400","text-green-400"];
+
+  for (let i = 1; i <= 4; i++) {
+    const bar = document.getElementById("str-" + i);
+    bar.className = `h-1 flex-1 rounded-full transition-colors duration-300 ${i <= score ? colors[score - 1] : "bg-gray-800"}`;
+  }
+  const lbl = document.getElementById("str-label");
+  lbl.textContent = val.length > 0 ? "القوة: " + (labels[score - 1] || "ضعيفة") : "";
+  lbl.className   = `text-xs ${val.length > 0 ? (txtCols[score - 1] || "text-red-400") : "text-gray-600"}`;
+}
+
+/**
+ * يتحقق من تطابق كلمتَي المرور ويُظهر رسالة فورية.
+ */
+function checkPwMatch() {
+  const nw   = document.getElementById("pw-new").value;
+  const conf = document.getElementById("pw-confirm").value;
+  const msg  = document.getElementById("pw-match-msg");
+  if (!conf) { msg.classList.add("hidden"); return; }
+  msg.classList.remove("hidden");
+  if (nw === conf) {
+    msg.textContent = "✅ كلمتا المرور متطابقتان";
+    msg.className   = "text-xs mt-1.5 text-green-400";
+  } else {
+    msg.textContent = "❌ كلمتا المرور غير متطابقتين";
+    msg.className   = "text-xs mt-1.5 text-red-400";
+  }
+}
+
+/**
+ * تنفيذ تغيير كلمة المرور مع التحقق الكامل.
+ */
+function doChangePassword() {
+  const current = document.getElementById("pw-current").value;
+  const nw      = document.getElementById("pw-new").value;
+  const confirm = document.getElementById("pw-confirm").value;
+  const errEl   = document.getElementById("pw-error");
+
+  /* ── التحقق من كلمة المرور الحالية ── */
+  if (current !== getActivePassword()) {
+    showPwError("كلمة المرور الحالية غير صحيحة ❌"); return;
+  }
+  /* ── التحقق من الحد الأدنى للطول ── */
+  if (nw.length < 6) {
+    showPwError("كلمة المرور الجديدة قصيرة جداً (6 أحرف على الأقل) ⚠️"); return;
+  }
+  /* ── التحقق من التطابق ── */
+  if (nw !== confirm) {
+    showPwError("كلمتا المرور الجديدة غير متطابقتين ❌"); return;
+  }
+  /* ── منع استخدام نفس كلمة المرور ── */
+  if (nw === getActivePassword()) {
+    showPwError("كلمة المرور الجديدة مطابقة للحالية، اختر كلمة مختلفة ⚠️"); return;
+  }
+
+  /* ── حفظ كلمة المرور الجديدة ── */
+  localStorage.setItem("gnr_admin_pass", nw);
+  errEl.classList.add("hidden");
+  resetPwForm();
+  refreshPwHint();
+  showToast("تم تغيير كلمة المرور بنجاح ✅");
+}
+
+function showPwError(msg) {
+  const errEl = document.getElementById("pw-error");
+  errEl.textContent = msg;
+  errEl.classList.remove("hidden");
+}
+
+/**
+ * تفريغ نموذج تغيير كلمة المرور.
+ */
+function resetPwForm() {
+  ["pw-current","pw-new","pw-confirm"].forEach((id) => {
+    document.getElementById(id).value = "";
+    document.getElementById(id).type  = "password";
+  });
+  document.getElementById("pw-error").classList.add("hidden");
+  document.getElementById("pw-match-msg").classList.add("hidden");
+  checkPwStrength("");
 }
 
 /* ════════════════════════════════════════════

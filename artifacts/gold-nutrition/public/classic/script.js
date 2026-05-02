@@ -1,6 +1,86 @@
 /* ================================================================
    script.js — Gold Nutrition Rouiba
-   المنطق الكامل: Firebase · السلة · واتساب
+   المنطق الكامل: Firebase · السلة · واتساب · استبدال النص
+   ================================================================ */
+
+/* ================================================================
+   0. استبدال النص — Arabic ➜ French
+   ================================================================
+   يبحث عن "غولد نيوتريشن رويبة" في كامل الصفحة ويستبدلها
+   بـ "Gold Nutrition Rouiba" حتى في المحتوى المُحمَّل ديناميكياً.
+   ================================================================ */
+
+/**
+ * يستبدل نص داخل عقدة نصية واحدة (TextNode).
+ * @param {Text} node
+ */
+function replaceInTextNode(node) {
+  if (node.nodeValue && node.nodeValue.includes("غولد نيوتريشن رويبة")) {
+    node.nodeValue = node.nodeValue.replace(/غولد نيوتريشن رويبة/g, "Gold Nutrition Rouiba");
+  }
+}
+
+/**
+ * يمشي على كل العقد النصية داخل عنصر معيّن.
+ * @param {Element} root - العنصر الجذري للبحث فيه
+ */
+function walkTextNodes(root) {
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_TEXT,   // فقط العقد النصية
+    null
+  );
+  let node;
+  while ((node = walker.nextNode())) {
+    replaceInTextNode(node);
+  }
+}
+
+/**
+ * يُشغَّل فور تحميل الصفحة ثم يراقب أي تغييرات DOM لاحقة.
+ * يعمل حتى مع المحتوى المُضاف ديناميكياً (Firebase / Ajax).
+ */
+function initTextReplacer() {
+  /* --- استبدال أوّلي لكل محتوى الصفحة --- */
+  walkTextNodes(document.body);
+
+  /* --- مراقب DOM: يعمل على كل عقدة تُضاف لاحقاً --- */
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      /* عقد نصية جديدة مباشرة */
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          replaceInTextNode(node);
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          walkTextNodes(node);
+        }
+      });
+      /* تغيير في نص عقدة موجودة */
+      if (
+        mutation.type === "characterData" &&
+        mutation.target.nodeType === Node.TEXT_NODE
+      ) {
+        replaceInTextNode(mutation.target);
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    childList:     true,   // رصد إضافة / إزالة العناصر
+    subtree:       true,   // رصد كل المستويات
+    characterData: true,   // رصد تغيير النصوص مباشرة
+  });
+}
+
+/* تشغيل المستبدِل بعد اكتمال DOM */
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initTextReplacer);
+} else {
+  initTextReplacer();
+}
+
+/* ================================================================
+   نهاية قسم استبدال النص
    ================================================================ */
 
 /* ----------------------------------------------------------------
