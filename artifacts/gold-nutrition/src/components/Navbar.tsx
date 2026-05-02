@@ -100,10 +100,10 @@ export default function Navbar({ onCartOpen }: NavbarProps) {
             <div className="flex items-center gap-2 cursor-pointer group">
               <div>
                 <span className="font-bold text-white text-sm leading-none block text-right">
-                  غولد نيوتريشن
+                  Gold Nutrition
                 </span>
                 <span className="text-yellow-500 text-xs font-semibold tracking-widest text-right block">
-                  رويبة
+                  Rouiba
                 </span>
               </div>
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-700 flex items-center justify-center shadow-lg shadow-yellow-900/40 group-hover:shadow-yellow-500/30 transition-shadow">

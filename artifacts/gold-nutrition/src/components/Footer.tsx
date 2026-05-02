@@ -16,10 +16,10 @@ export default function Footer() {
               </div>
               <div>
                 <span className="font-bold text-white text-sm leading-none block">
-                  غولد نيوتريشن
+                  Gold Nutrition
                 </span>
                 <span className="text-yellow-500 text-xs font-semibold tracking-widest block">
-                  رويبة
+                  Rouiba
                 </span>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-gray-400 hover:text-yellow-400 transition-colors text-sm"
               >
-                غولد نيوتريشن رويبة
+                Gold Nutrition Rouiba
                 <Facebook className="w-4 h-4 text-yellow-600" />
               </a>
               <a
@@ -82,7 +82,7 @@ export default function Footer() {
         {/* السطر السفلي */}
         <div className="mt-10 pt-6 border-t border-yellow-900/20 flex flex-col sm:flex-row items-center justify-between gap-2 text-gray-600 text-xs">
           <span>صُنع بـ 💛 للأبطال</span>
-          <span>© {new Date().getFullYear()} غولد نيوتريشن رويبة. جميع الحقوق محفوظة.</span>
+          <span>© {new Date().getFullYear()} Gold Nutrition Rouiba. جميع الحقوق محفوظة.</span>
         </div>
       </div>
     </footer>

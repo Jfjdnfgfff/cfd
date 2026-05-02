@@ -176,8 +176,8 @@ export default function AdminPage() {
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-700 flex items-center justify-center shadow-2xl shadow-yellow-900/50 mb-4">
               <Dumbbell className="w-8 h-8 text-black" strokeWidth={2.5} />
             </div>
-            <h1 className="text-white font-black text-2xl">غولد نيوتريشن</h1>
-            <p className="text-yellow-500 text-xs tracking-widest font-semibold mt-0.5">لوحة التحكم — رويبة</p>
+            <h1 className="text-white font-black text-2xl">Gold Nutrition</h1>
+            <p className="text-yellow-500 text-xs tracking-widest font-semibold mt-0.5">لوحة التحكم — Rouiba</p>
           </div>
 
           <form onSubmit={handleLogin} className="admin-card rounded-2xl p-6 shadow-2xl border border-yellow-900/30">
@@ -249,8 +249,8 @@ export default function AdminPage() {
                 <Dumbbell className="w-4 h-4 text-black" strokeWidth={2.5} />
               </div>
               <div>
-                <p className="text-white font-black text-sm leading-none">غولد نيوتريشن</p>
-                <p className="text-yellow-500 text-xs font-semibold mt-0.5">رويبة</p>
+                <p className="text-white font-black text-sm leading-none">Gold Nutrition</p>
+                <p className="text-yellow-500 text-xs font-semibold mt-0.5">Rouiba</p>
               </div>
             </div>
 

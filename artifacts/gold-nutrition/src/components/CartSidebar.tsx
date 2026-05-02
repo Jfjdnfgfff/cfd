@@ -81,7 +81,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
       .join("\n");
 
     const message = encodeURIComponent(
-      `🛒 *طلب جديد - غولد نيوتريشن رويبة*\n\n` +
+      `🛒 *طلب جديد - Gold Nutrition Rouiba*\n\n` +
       `👤 الاسم الكامل: ${form.firstName} ${form.lastName}\n` +
       `📍 الولاية: ${form.wilaya}\n` +
       `🏘️ البلدية: ${form.baladiya}\n` +
